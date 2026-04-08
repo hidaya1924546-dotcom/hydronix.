@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hydronix | Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2f7ee6, #1f63d6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background: white;
+    width: 360px;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.container h1 {
+    color: #1f63d6;
+    margin-bottom: 10px;
+}
+
+.container p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #1f63d6;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1 id="title">💧 Hydronix</h1>
+    <p id="subtitle">Login to continue</p>
+
+    <select id="language" onchange="setLanguage()">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+        <option value="fr">Français</option>
+    </select>
+
+    <input type="text" id="username" placeholder="Your Name" autocomplete="off">
+    <input type="email" id="email" placeholder="Email" autocomplete="off">
+    <input type="password" id="password" placeholder="Password" autocomplete="off">
+    <button onclick="login()" id="loginBtn">Log In</button>
+</div>
+
+<script>
+// ترجمة النصوص
+const translations = {
+    en: {
+        title: "💧 Hydronix",
+        subtitle: "Login to continue",
+        username: "Your Name",
+        email: "Email",
+        password: "Password",
+        loginBtn: "Log In",
+        alertName: "Please enter your name"
+    },
+    ar: {
+        title: "💧 هيدرونيكس",
+        subtitle: "سجل الدخول للمتابعة",
+        username: "اسمك",
+        email: "البريد الإلكتروني",
+        password: "كلمة المرور",
+        loginBtn: "تسجيل الدخول",
+        alertName: "من فضلك أدخل اسمك"
+    },
+    fr: {
+        title: "💧 Hydronix",
+        subtitle: "Connectez-vous pour continuer",
+        username: "Votre Nom",
+        email: "Email",
+        password: "Mot de passe",
+        loginBtn: "Se connecter",
+        alertName: "Veuillez entrer votre nom"
+    }
+};
+
+// ضبط اللغة
+function setLanguage() {
+    const lang = document.getElementById("language").value;
+    localStorage.setItem("lang", lang);
+    applyLanguage();
+}
+
+// تطبيق اللغة على النصوص
+function applyLanguage() {
+    const lang = localStorage.getItem("lang") || "en";
+    document.getElementById("title").textContent = translations[lang].title;
+    document.getElementById("subtitle").textContent = translations[lang].subtitle;
+    document.getElementById("username").placeholder = translations[lang].username;
+    document.getElementById("email").placeholder = translations[lang].email;
+    document.getElementById("password").placeholder = translations[lang].password;
+    document.getElementById("loginBtn").textContent = translations[lang].loginBtn;
+    document.getElementById("language").value = lang;
+}
+
+// دالة تسجيل الدخول
+function login() {
+    const name = document.getElementById("username").value;
+    const lang = localStorage.getItem("lang") || "en";
+
+    if(name === ""){
+        alert(translations[lang].alertName);
+        return;
+    }
+
+    localStorage.setItem("loggedIn", "true");
+    localStorage.setItem("username", name);
+
+    window.location.href = "website.html";
+}
+
+// عند تحميل الصفحة، نطبق اللغة المختارة سابقاً
+window.onload = applyLanguage;
+</script>
+
+</body>
+</html>
